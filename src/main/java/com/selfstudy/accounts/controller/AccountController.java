@@ -1,7 +1,6 @@
 package com.selfstudy.accounts.controller;
 
 import com.selfstudy.accounts.constants.AccountConstant;
-import com.selfstudy.accounts.dto.AccountDto;
 import com.selfstudy.accounts.dto.CustomerDto;
 import com.selfstudy.accounts.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
