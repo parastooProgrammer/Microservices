@@ -12,6 +12,7 @@ import com.selfstudy.accounts.service.IAccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
@@ -28,11 +29,13 @@ public class AccountServiceImp implements IAccountService {
     @Override
     public void createAccount(CustomerDto customerDto) {
         Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
-        Optional<Customer> optionalCustomer = customerRepository.findByCustomerMobileNumber(customerDto.getMobileNumber());
+        Optional<Customer> optionalCustomer = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
         if (optionalCustomer.isPresent()) {
            throw new CustomerAlreadyExistException("Customer Already Exists with The given Mobile Number "
                    +customerDto.getMobileNumber());
         }
+        customer.setCreatedBy("pa");
+        customer.setCreatedAt(new Date());
         Customer savedCustomer = customerRepository.save(customer);
         Account account = createNewAccount(savedCustomer);
 
