@@ -25,7 +25,7 @@ public class AccountController {
         return "Hello Wolrd";
     }
 
-    @PostMapping("/craete")
+    @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(CustomerDto customerDto) {
         iAccountService.createAccount(customerDto);
         return ResponseEntity.status(HttpStatus.CREATED)
