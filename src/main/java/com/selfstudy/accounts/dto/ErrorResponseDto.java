@@ -12,4 +12,7 @@ public class ErrorResponseDto {
     private HttpStatus errorCode;
     private String errorMessage;
     private LocalDateTime errorTime;
+
+//    public ErrorResponseDto(String apiPath, HttpStatus errorCode, String errorMessage, LocalDateTime errorTime) {
+//    }
 }

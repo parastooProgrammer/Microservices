@@ -37,8 +37,6 @@ public class AccountServiceImp implements IAccountService {
            throw new CustomerAlreadyExistException("Customer Already Exists with The given Mobile Number "
                    +customerDto.getMobileNumber());
         }
-        customer.setCreatedBy("pa");
-        customer.setCreatedAt(new Date());
         Customer savedCustomer = customerRepository.save(customer);
         Account account = createNewAccount(savedCustomer);
 

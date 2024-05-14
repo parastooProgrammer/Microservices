@@ -4,9 +4,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.*;
 
 @Data
+@Getter @Setter @ToString
 public class CustomerDto {
 
     @NotEmpty(message = "Name can not be a null or empty")
@@ -19,5 +20,6 @@ public class CustomerDto {
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
     private String mobileNumber;
     private AccountDto accountsDto;
+
 
 }
