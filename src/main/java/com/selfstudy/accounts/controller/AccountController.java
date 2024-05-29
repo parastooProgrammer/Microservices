@@ -2,8 +2,15 @@ package com.selfstudy.accounts.controller;
 
 import com.selfstudy.accounts.constants.AccountConstant;
 import com.selfstudy.accounts.dto.CustomerDto;
+import com.selfstudy.accounts.dto.ErrorResponseDto;
 import com.selfstudy.accounts.dto.ResponseDto;
 import com.selfstudy.accounts.service.IAccountService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -13,6 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 
+@Tag(
+        name=" crud account",
+        description = "*******"
+)
 @RestController
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
@@ -31,6 +42,14 @@ public class AccountController {
      * @param customerDto
      * @return
      */
+    @Operation(
+            summary = "to create an account",
+            description = "*******"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "*****"
+    )
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
         iAccountService.createAccount(customerDto);
@@ -67,7 +86,7 @@ public class AccountController {
         }else{
             return ResponseEntity
                     .status(HttpStatus.EXPECTATION_FAILED)
-                    .body(new ResponseDto(AccountConstant.STATUS_417, AccountConstant.MESSAGE_417_UPDATE));
+                    .body(new ResponseDto(AccountConstant.STATUS_500, AccountConstant.MESSAGE_417_UPDATE));
         }
     }
 
@@ -76,6 +95,28 @@ public class AccountController {
      * @param mobileNumber
      * @return
      */
+    @Operation(
+            summary = "to delete an account",
+            description = "*******"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "417",
+                    description = "Expectation Failed"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam
                                                             @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
@@ -88,7 +129,7 @@ public class AccountController {
         }else{
             return ResponseEntity
                     .status(HttpStatus.EXPECTATION_FAILED)
-                    .body(new ResponseDto(AccountConstant.STATUS_417, AccountConstant.MESSAGE_417_DELETE));
+                    .body(new ResponseDto(AccountConstant.STATUS_500, AccountConstant.MESSAGE_417_DELETE));
         }
     }
 }
